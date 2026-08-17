@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+
+  --color-canvas: hsl(210 20% 98%);
+  --color-surface: hsl(0 0% 100%);
+  --color-sidebar-bg: hsl(240 6% 10%);
+  --color-sidebar-text: hsl(240 5% 65%);
+
+  --color-primary-50: hsl(224 100% 97%);
+  --color-primary-600: hsl(224 86% 46%);
+  --color-primary-700: hsl(224 76% 36%);
+  --color-primary-950: hsl(222 47% 11%);
+
+  --color-neutral-50: hsl(210 40% 98%);
+  --color-neutral-100: hsl(210 40% 96.1%);
+  --color-neutral-200: hsl(214 32% 91%);
+  --color-neutral-400: hsl(215 16% 57%);
+  --color-neutral-700: hsl(215 25% 27%);
+  --color-neutral-900: hsl(222 47% 11%);
+
+  --color-success-bg: hsl(140 76% 95%);
+  --color-success-text: hsl(142 76% 25%);
+  --color-danger-bg: hsl(0 86% 96%);
+  --color-danger-text: hsl(0 84% 35%);
+  --color-warning-bg: hsl(38 92% 95%);
+  --color-warning-text: hsl(38 92% 30%);
+
+  --color-success: hsl(142 76% 36%);
+  --color-danger: hsl(0 84% 60%);
+  --color-warning: hsl(38 92% 50%);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: var(--color-neutral-900);
+}
+
+input, select, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+}
+
+.has-error {
+  border-color: #ef4444 !important;
+}
+
+.has-error:focus, .custom-select-trigger.has-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2) !important;
+}
+
+input[type="checkbox"]:checked + div {
+  border-color: hsl(224 86% 46%) !important;
+  background-color: hsl(224 86% 46%) !important;
+}
+
+input[type="checkbox"]:checked + div svg {
+  opacity: 1 !important;
+}
+
+input[type="radio"]:checked + div {
+  border-color: hsl(224 86% 46%) !important;
+}
+
+input[type="radio"]:checked + div div {
+  opacity: 1 !important;
+}
+
+.modal-backdrop.is-visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.modal-backdrop.is-visible .modal-card {
+  transform: scale(1) !important;
+}
+
+.toast-notification.is-visible {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    font-family: "Times New Roman", Times, serif !important;
+    color: black !important;
+  }
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: var(--color-neutral-200);
+  border-radius: 9999px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-neutral-400);
+}
+
+#app-sidebar.sidebar-collapsed {
+  width: 4rem;
+}
+
+#app-sidebar.sidebar-collapsed .sidebar-text {
+  display: none !important;
+}
+
+#app-sidebar.sidebar-collapsed .p-5 {
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+#app-sidebar.sidebar-collapsed nav a {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  gap: 0 !important;
+}
+
+#app-sidebar.sidebar-collapsed .px-3 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  justify-content: center !important;
+}
+
+#app-sidebar.sidebar-collapsed button {
+  justify-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  gap: 0 !important;
+}
+
+.datepicker-calendar {
+  width: 19rem !important;
+}
+
+.datepicker-calendar .days-grid {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  row-gap: 0.25rem;
+  column-gap: 0.25rem;
+}
