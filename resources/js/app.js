@@ -5,6 +5,8 @@ import './modules/student-search.js';
 import './modules/quick-search.js';
 import './modules/custom-select.js';
 import './modules/datepicker.js';
+import './modules/form-draft.js';
+import './modules/input-numeric.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const sessionSuccessModal = document.querySelector('#session-success-modal');

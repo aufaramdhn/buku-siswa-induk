@@ -18,7 +18,7 @@
                         <line x1="16" y1="17" x2="8" y2="17"></line>
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    <span class="whitespace-nowrap">Print All Students</span>
+                    <span class="whitespace-nowrap">Cetak Rekap Seluruh Siswa</span>
                 </x-ui.button>
                 <x-ui.button href="{{ route('students.create') }}" variant="primary" class="w-full sm:w-auto justify-center whitespace-nowrap">
                     <x-ui.icon name="plus" class="w-4 h-4 text-white stroke-white" />

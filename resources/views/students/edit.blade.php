@@ -464,13 +464,14 @@
             </x-ui.button>
         </div>
 
-        <x-feedback.modal-confirm 
-            id="save-confirm-modal" 
-            title="Simpan Perubahan Data Siswa" 
-            confirmText="Simpan" 
-            confirmVariant="primary"
-        >
-            Apakah Anda yakin ingin menyimpan seluruh perubahan data yang Anda lakukan pada data siswa <strong>{{ $student->name }}</strong>?
-        </x-feedback.modal-confirm>
     </form>
+
+    <x-feedback.modal-confirm 
+        id="save-confirm-modal" 
+        title="Simpan Perubahan Data Siswa" 
+        confirmText="Simpan" 
+        confirmVariant="primary"
+    >
+        Apakah Anda yakin ingin menyimpan seluruh perubahan data yang Anda lakukan pada data siswa <strong>{{ $student->name }}</strong>?
+    </x-feedback.modal-confirm>
 @endsection

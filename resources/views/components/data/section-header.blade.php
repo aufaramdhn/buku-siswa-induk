@@ -34,15 +34,5 @@
         <div class="flex items-center gap-3 w-full sm:w-auto">
             {{ $actions }}
         </div>
-    @elseif($backUrl)
-        <div class="flex items-center gap-3 w-full sm:w-auto">
-            <x-ui.button href="{{ $backUrl }}" variant="secondary">
-                <svg class="w-4 h-4 text-neutral-500 mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                <span>Kembali</span>
-            </x-ui.button>
-        </div>
     @endif
 </div>

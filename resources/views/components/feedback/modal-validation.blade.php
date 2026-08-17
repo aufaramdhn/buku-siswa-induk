@@ -1,9 +1,6 @@
-<div 
-    id="validation-error-modal" 
-    class="modal-backdrop fixed inset-0 z-[60] flex items-center justify-center bg-neutral-900/60 backdrop-blur-xs hidden opacity-0 transition-opacity duration-150 ease-out select-none"
->
-    <div class="modal-card bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl border border-neutral-100 transform scale-95 transition-transform duration-150 ease-out text-center flex flex-col items-center">
-        <div class="w-14 h-14 rounded-full bg-danger-bg flex items-center justify-center mb-4 text-danger border border-danger/10">
+<x-feedback.modal id="validation-error-modal" size="max-w-md">
+    <div class="flex flex-col items-center text-center">
+        <div class="w-14 h-14 rounded-full bg-danger-bg flex items-center justify-center mb-4 text-danger border border-danger/10 flex-shrink-0">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10"></circle>
                 <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -22,4 +19,4 @@
             </x-ui.button>
         </div>
     </div>
-</div>
+</x-feedback.modal>

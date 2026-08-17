@@ -131,15 +131,16 @@
             </div>
         </div>
 
-        <x-feedback.modal-confirm 
-            id="save-confirm-modal" 
-            title="Simpan Perubahan Profil Sekolah" 
-            confirmText="Simpan" 
-            confirmVariant="primary"
-        >
-            Apakah Anda yakin ingin menyimpan perubahan konfigurasi data sekolah? Perubahan ini akan langsung mempengaruhi penandatanganan cetakan laporan Buku Induk.
-        </x-feedback.modal-confirm>
     </form>
+
+    <x-feedback.modal-confirm 
+        id="save-confirm-modal" 
+        title="Simpan Perubahan Profil Sekolah" 
+        confirmText="Simpan" 
+        confirmVariant="primary"
+    >
+        Apakah Anda yakin ingin menyimpan perubahan konfigurasi data sekolah? Perubahan ini akan langsung mempengaruhi penandatanganan cetakan laporan Buku Induk.
+    </x-feedback.modal-confirm>
 @endsection
 
 @section('scripts')

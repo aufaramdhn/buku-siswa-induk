@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let debounceTimeout = null;
     let currentPage = 1;
 
+    const userRole = document.body.getAttribute('data-role');
+    const isAdmin = userRole === 'admin';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+
     const updatePaginationUI = (meta) => {
         if (!paginationContainer) return;
 
@@ -180,6 +184,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     const statusClass = student.rombel.includes('IX') ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200';
                     const statusLabel = student.rombel.includes('IX') ? 'Lulus' : 'Aktif';
 
+                    let deleteBtnHtml = '';
+                    let deleteModalHtml = '';
+
+                    if (isAdmin) {
+                        deleteBtnHtml = `
+                            <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors cursor-pointer outline-none bg-white border border-neutral-200 text-red-600 hover:bg-neutral-50 active:bg-neutral-100 select-none" data-modal-target="#delete-confirm-modal-${student.id}">
+                                <svg class="w-4 h-4 text-red-600 stroke-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        `;
+
+                        deleteModalHtml = `
+                            <div id="delete-confirm-modal-${student.id}" class="modal-backdrop fixed inset-0 bg-neutral-900/50 z-50 flex items-center justify-center p-4 transition-opacity duration-100 ease-out opacity-0 pointer-events-none">
+                                <div class="modal-card bg-white rounded-xl w-full max-w-md p-6 shadow-xl border border-neutral-100 transform scale-95 transition-transform duration-100 ease-out">
+                                    <form action="/students/${student.id}" method="POST" class="no-validate-modal">
+                                        <input type="hidden" name="_token" value="${csrfToken}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <div class="flex flex-col items-center text-center">
+                                            <div class="w-12 h-12 rounded-full bg-danger-bg border border-danger-bg/10 flex items-center justify-center mb-4 flex-shrink-0">
+                                                <svg class="w-6 h-6 text-danger stroke-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                            </div>
+                                            <h3 class="text-lg font-semibold text-neutral-900 mb-2 font-sans">Hapus Data Siswa</h3>
+                                            <p class="text-sm text-neutral-500 mb-6 font-sans">
+                                                Apakah Anda yakin ingin menghapus data siswa <strong>${student.name}</strong> (NIPD: ${student.nipd}) secara permanen? Tindakan ini tidak dapat dibatalkan.
+                                            </p>
+                                            <div class="grid grid-cols-2 gap-3 w-full">
+                                                <button type="button" class="font-medium px-5 py-2.5 rounded-lg text-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer outline-none whitespace-nowrap bg-white border border-neutral-200 text-neutral-700 hover:bg-neutral-50 active:bg-neutral-200 w-full modal-close-btn" data-modal-dismiss="#delete-confirm-modal-${student.id}">Batal</button>
+                                                <button type="submit" class="font-medium px-5 py-2.5 rounded-lg text-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer outline-none whitespace-nowrap bg-danger text-white hover:bg-red-700 active:bg-red-950 shadow-sm border border-transparent w-full">Hapus</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     html += `
                         <tr class="border-b border-neutral-200 hover:bg-neutral-50/50 transition-colors">
                             <td class="px-6 py-2.5 text-sm font-sans text-neutral-900">${student.nipd}</td>
@@ -200,6 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <a href="/students/${student.id}/print" target="_blank" class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors cursor-pointer outline-none bg-white border border-neutral-200 text-blue-600 hover:bg-neutral-50 active:bg-neutral-100 select-none">
                                         <svg class="w-4 h-4 text-blue-600 stroke-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                                     </a>
+                                    ${deleteBtnHtml}
+                                    ${deleteModalHtml}
                                 </div>
                             </td>
                         </tr>
@@ -239,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <a href="/students/${student.id}/print" target="_blank" class="w-9 h-9 rounded-lg flex items-center justify-center transition-colors cursor-pointer outline-none bg-white border border-neutral-200 text-blue-600 hover:bg-neutral-50 active:bg-neutral-100 select-none">
                                     <svg class="w-4 h-4 text-blue-600 stroke-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                                 </a>
+                                ${deleteBtnHtml}
                             </div>
                         </div>
                     `;

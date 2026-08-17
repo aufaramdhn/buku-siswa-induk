@@ -446,13 +446,14 @@
             </x-ui.button>
         </div>
 
-        <x-feedback.modal-confirm 
-            id="save-confirm-modal" 
-            title="Simpan Registrasi Siswa Baru" 
-            confirmText="Simpan Data" 
-            confirmVariant="primary"
-        >
-            Apakah Anda yakin data yang dimasukkan untuk pendaftaran siswa baru sudah benar dan lengkap? Data ini akan dimasukkan ke Buku Induk sekolah.
-        </x-feedback.modal-confirm>
     </form>
+
+    <x-feedback.modal-confirm 
+        id="save-confirm-modal" 
+        title="Simpan Registrasi Siswa Baru" 
+        confirmText="Simpan Data" 
+        confirmVariant="primary"
+    >
+        Apakah Anda yakin data yang dimasukkan untuk pendaftaran siswa baru sudah benar dan lengkap? Data ini akan dimasukkan ke Buku Induk sekolah.
+    </x-feedback.modal-confirm>
 @endsection

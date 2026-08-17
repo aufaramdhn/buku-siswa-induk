@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title') - Buku Induk Siswa</title>
     <link rel="icon" type="image/png" href="/images/logo_smp_cisewu.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-canvas text-neutral-900 flex h-screen overflow-hidden">
+<body class="bg-canvas text-neutral-900 flex h-screen overflow-hidden" data-role="{{ auth()->check() ? auth()->user()->role : '' }}">
 
     @if(session('success'))
         @php

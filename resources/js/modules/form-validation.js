@@ -16,38 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const openValidationModal = () => {
         if (!validationModal) return;
-        validationModal.classList.remove('hidden');
-        requestAnimationFrame(() => {
-            validationModal.classList.remove('opacity-0');
-            const card = validationModal.querySelector('.modal-card');
-            if (card) {
-                card.classList.remove('scale-95');
-                card.classList.add('scale-100');
-            }
-        });
+        validationModal.classList.add('is-visible');
     };
 
     const closeValidationModal = () => {
         if (!validationModal) return;
-        const card = validationModal.querySelector('.modal-card');
-        if (card) {
-            card.classList.remove('scale-100');
-            card.classList.add('scale-95');
+        validationModal.classList.remove('is-visible');
+        if (activeErrorTabTarget) {
+            const tabBtn = document.querySelector(`.tab-item[data-target="${activeErrorTabTarget}"]`);
+            if (tabBtn) {
+                tabBtn.click();
+            }
         }
-        validationModal.classList.add('opacity-0');
-        setTimeout(() => {
-            validationModal.classList.add('hidden');
-            if (activeErrorTabTarget) {
-                const tabBtn = document.querySelector(`.tab-item[data-target="${activeErrorTabTarget}"]`);
-                if (tabBtn) {
-                    tabBtn.click();
-                }
-            }
-            if (firstErrorElement) {
-                firstErrorElement.focus();
-                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 150);
+        if (firstErrorElement) {
+            firstErrorElement.focus();
+            firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    const openConfirmModal = () => {
+        if (!confirmSaveModal) return;
+        confirmSaveModal.classList.add('is-visible');
     };
 
     if (dismissModalBtn) {
@@ -61,29 +50,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const openConfirmModal = () => {
-        if (!confirmSaveModal) return;
-        confirmSaveModal.classList.remove('hidden');
-        requestAnimationFrame(() => {
-            confirmSaveModal.classList.remove('opacity-0');
-            const card = confirmSaveModal.querySelector('.modal-card');
-            if (card) {
-                card.classList.remove('scale-95');
-                card.classList.add('scale-100');
+    const submitParentForm = () => {
+        const targetForm = pendingSubmitForm || document.getElementById('create-student-form') || document.getElementById('edit-student-form') || document.getElementById('settings-form');
+        if (targetForm) {
+            window.isFormSubmitting = true;
+            if (typeof window.clearAllFormDrafts === 'function') {
+                window.clearAllFormDrafts();
             }
-        });
+            targetForm.classList.add('submitting-validated');
+            targetForm.submit();
+        }
     };
 
     if (confirmSaveForm) {
         confirmSaveForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const studentForm = document.getElementById('create-student-form') || document.getElementById('edit-student-form') || pendingSubmitForm;
-            if (studentForm) {
-                studentForm.classList.add('submitting-validated');
-                studentForm.submit();
-            }
+            submitParentForm();
         });
     }
+
+    document.addEventListener('click', (e) => {
+        const confirmBtn = e.target.closest('#save-confirm-modal-submit-btn, .btn-modal-confirm-submit');
+        if (confirmBtn) {
+            e.preventDefault();
+            submitParentForm();
+        }
+    });
 
     const checkFormValidity = (form) => {
         let isValid = true;
@@ -160,6 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (form === confirmSaveForm) return;
         if (form.classList.contains('no-validate-modal')) return;
         if (form.classList.contains('submitting-validated')) return;
+        if (form.closest('.modal-backdrop')) return;
+        if (form.id && form.id.endsWith('-modal-form')) return;
 
         e.preventDefault();
         handleSaveTrigger(form);
